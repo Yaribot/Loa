@@ -16,7 +16,7 @@ public class ControlledFading : MonoBehaviour
     private Renderer rend;
     
     private bool fadeImput;
-    public bool isFading;
+    public bool isApearing;
     public bool isDisapearing;
     // Start is called before the first frame update
     void Start()
@@ -26,14 +26,14 @@ public class ControlledFading : MonoBehaviour
         rend.material.SetFloat(gradiantID, invisible);
         lerp = invisible;
         myTime = 0f;
-        isFading = false;
+        isApearing = false;
         isDisapearing = false;
 
     }
 
     // Update is called once per frame
     void Update()
-    {
+    {/*
         GetInput();
 
         if (fadeImput)
@@ -41,9 +41,10 @@ public class ControlledFading : MonoBehaviour
             CheckBool();
             myTime = 0f;
         }
+        */
 
        
-        if (isFading)
+        if (isApearing)
         {
             myTime += Time.deltaTime;
 
@@ -55,7 +56,7 @@ public class ControlledFading : MonoBehaviour
             FadingFunction(lerp, invisible);
         }
         //Debug.Log(gradVal);
-
+        //Debug.Log(myTime);
     }
 
     public void GetInput()
@@ -66,16 +67,16 @@ public class ControlledFading : MonoBehaviour
     public void CheckBool()
     {
         //Debug.Log("CHECKING");
-        if (!isFading)
+        if (!isApearing)
         {
-            isFading = true;
+            isApearing = true;
             isDisapearing = false;
             return;
         }
         if (!isDisapearing)
         {
             isDisapearing = true;
-            isFading = false;
+            isApearing = false;
             return;
         }
     }
@@ -95,6 +96,48 @@ public class ControlledFading : MonoBehaviour
             lerp = param2;
         }
 
+    }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("VisionTag"))
+        {
+            CheckBool();
+            myTime = 0f;
+            /*
+                //Debug.Log("SPIRIT ENTER");
+                CheckBool();
+                myTime = 0f;
+
+                if (isApearing)
+                {
+                    myTime += Time.deltaTime;
+
+                    FadingFunction(lerp, visible);
+                }
+            */
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("VisionTag"))
+        {
+            CheckBool();
+            myTime = 0f;
+            /*
+                //  Debug.Log("SPIRIT EXIT");
+                CheckBool();
+                myTime = 0f;
+
+                if (isDisapearing)
+                {
+                    myTime += Time.deltaTime;
+                    FadingFunction(lerp, invisible);
+                }
+            */
+        }
     }
 
 }
