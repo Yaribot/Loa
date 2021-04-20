@@ -15,7 +15,7 @@ public class ControlledFading : MonoBehaviour
 
     private Renderer rend;
     
-    private bool fadeImput;
+    //private bool fadeImput;
     public bool isApearing;
     public bool isDisapearing;
     // Start is called before the first frame update
@@ -47,7 +47,6 @@ public class ControlledFading : MonoBehaviour
         if (isApearing)
         {
             myTime += Time.deltaTime;
-
             FadingFunction(lerp, visible);
         }
         if (isDisapearing)
@@ -59,10 +58,10 @@ public class ControlledFading : MonoBehaviour
         //Debug.Log(myTime);
     }
 
-    public void GetInput()
+    /*public void GetInput()
     {
         fadeImput = Input.GetKeyDown(KeyCode.F);
-    }
+    }*/
 
     public void CheckBool()
     {
@@ -92,7 +91,7 @@ public class ControlledFading : MonoBehaviour
         }
         else
         {
-            Debug.Log("FADE");
+            //Debug.Log("FADE");
             lerp = param2;
         }
 
