@@ -8,9 +8,9 @@ public class NpcSpirit : MonoBehaviour, IPooledObject
     //private GameObject pointsZone;
     //public List<Transform> moveSpots;
 
-    //public Transform[] moveSpots;
+    private Transform[] moveSpots;
 
-    //public float speed;
+    private float speed;
     private float waitTime;
     public float startWaitTime;
 
@@ -20,45 +20,54 @@ public class NpcSpirit : MonoBehaviour, IPooledObject
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        randomSpots = Random.Range(0, GameManager.Instance.npcMoveSpots.Length);
+        moveSpots = GameManager.Instance.npcMoveSpots;
+        randomSpots = Random.Range(0, moveSpots.Length);
+        speed = GameManager.Instance.npcSpeed;
         waitTime = startWaitTime;
         //pointsZone = SpawnManager.Instance.pointsZone;
         //CheckMovePoints();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        RecalculateDirection();
     }
 
     private void FixedUpdate()
     {
         OnObjectSpawned();
+        //Debug.Log(moveSpots[randomSpots].position);
     }
 
     public void OnObjectSpawned()
     {
         // Create the behaviour of the spirit !!
-        /*
+        
         transform.LookAt(moveSpots[randomSpots].position);
         rb.AddRelativeForce(Vector3.forward * speed, ForceMode.Force);
 
-        if(Vector3.Distance(transform.position, moveSpots[randomSpots].position) < 0.2f)
+        
+
+       // GameManager.Instance.NpcBehaviour(rb, waitTime, startWaitTime, randomSpots);
+
+    }
+
+    public void RecalculateDirection()
+    {
+        if (Vector3.Distance(transform.position, moveSpots[randomSpots].position) < 20f)
         {
-            if(waitTime <= 0)
+            if (waitTime <= 0)
             {
                 randomSpots = Random.Range(0, moveSpots.Length);
                 waitTime = startWaitTime;
             }
             else
             {
-                waitTime -= Time.fixedDeltaTime;
+                waitTime -= Time.deltaTime;
             }
-        }*/
-
-        GameManager.Instance.NpcBehaviour(rb, waitTime, startWaitTime, randomSpots);
-
+        }
     }
 
     /*private void CheckMovePoints()

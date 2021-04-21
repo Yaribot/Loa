@@ -57,10 +57,10 @@ public class SpawnManager : MonoSingleton<SpawnManager>
 
         IPooledObject pooledObj = objectToSpawn.GetComponent<IPooledObject>();
 
-        if(pooledObj != null)
+        /*if(pooledObj != null)
         {
             pooledObj.OnObjectSpawned();
-        }
+        }*/
 
         poolDictionnary[tag].Enqueue(objectToSpawn);
 

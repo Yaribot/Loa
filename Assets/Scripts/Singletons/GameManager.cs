@@ -25,7 +25,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         Debug.Log("My name is Yannis");
     }
-
+    /*
     public void NpcBehaviour(Rigidbody rb, float waitTime, float startTime, int randomSpots)
     {
         if (rb == null)
@@ -49,4 +49,5 @@ public class GameManager : MonoSingleton<GameManager>
             }
         }
     }
+    */
 }
