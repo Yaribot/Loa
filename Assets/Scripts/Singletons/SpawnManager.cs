@@ -7,6 +7,13 @@ public class SpawnManager : MonoSingleton<SpawnManager>
     public List<Pool> pools;
     public Dictionary<string, Queue<GameObject>> poolDictionnary;
 
+    public bool isSpawningClientThief;
+    public bool clientOnly;
+    public bool thiefOnly;
+
+    private IntVariable nbClient;
+    private IntVariable nbThief;
+
 
     public override void Init()
     {
@@ -18,6 +25,12 @@ public class SpawnManager : MonoSingleton<SpawnManager>
     {
         poolDictionnary = new Dictionary<string, Queue<GameObject>>();
         CheckPools();
+        //isSpawningClientThief = true;
+    }
+
+    private void Update()
+    {
+        CheckNbClientThief();
     }
 
     public void Spawning()
@@ -65,5 +78,35 @@ public class SpawnManager : MonoSingleton<SpawnManager>
         poolDictionnary[tag].Enqueue(objectToSpawn);
 
         return objectToSpawn;
+    }
+
+    public void CheckNbClientThief()
+    {
+        if (nbClient.Value <= 4 || nbThief.Value <= 5)
+        {
+            isSpawningClientThief = true;
+        }
+        else if(nbClient.Value == 4 && nbThief.Value == 5)
+        {
+            isSpawningClientThief = false;
+        }
+
+        if (nbClient.Value <= 3 && nbThief.Value <= 4)
+        {
+            clientOnly = false;
+            thiefOnly = false;
+        }
+
+        if (nbClient.Value >= 4)
+        {
+            thiefOnly = true;
+            clientOnly = false;
+        }
+
+        if (nbThief.Value >= 5)
+        {
+            clientOnly = true;
+            thiefOnly = false;
+        }
     }
 }

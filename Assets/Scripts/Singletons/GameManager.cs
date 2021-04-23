@@ -8,6 +8,8 @@ public class GameManager : MonoSingleton<GameManager>
     
     public Transform[] npcMoveSpots;
     public float npcSpeed;
+    public IntVariable nbClient;
+    public IntVariable nbThief;
   
     public override void Init()
     {
@@ -19,6 +21,8 @@ public class GameManager : MonoSingleton<GameManager>
     {
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("Main"));
         SceneManager.LoadScene("Environment", LoadSceneMode.Additive);
+        nbClient.Value = 0; // Wrong !! You have to reset Value to 0 evrey time the "Main" scene is loaded
+        nbThief.Value = 0; // Wrong !! You have to reset Value to 0 evrey time the "Main" scene is loaded
     }
 
     public void DisplayName()
