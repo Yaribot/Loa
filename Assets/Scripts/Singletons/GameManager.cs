@@ -10,7 +10,8 @@ public class GameManager : MonoSingleton<GameManager>
     public float npcSpeed;
     public IntVariable nbClient;
     public IntVariable nbThief;
-  
+    public Transform playerTransform;
+
     public override void Init()
     {
         base.Init();

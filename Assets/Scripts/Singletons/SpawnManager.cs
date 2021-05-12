@@ -10,9 +10,14 @@ public class SpawnManager : MonoSingleton<SpawnManager>
     public bool isSpawningClientThief;
     public bool clientOnly;
     public bool thiefOnly;
-
+    [SerializeField]
     private IntVariable nbClient;
+    [SerializeField]
     private IntVariable nbThief;
+
+    
+    public QueueSpot[] availableQueue;
+    public LootSpot[] availableLoot;
 
 
     public override void Init()
