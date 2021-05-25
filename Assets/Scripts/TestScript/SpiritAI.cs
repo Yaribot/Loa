@@ -47,6 +47,7 @@ public class SpiritAI : MonoBehaviour
     
     private void ConstructBehaviourTree()
     {
+        OrderGenerator orderGenerator = new OrderGenerator(gameM.stockItems, this);
         IsQueueSpotAvailable queueSpotAvailable = new IsQueueSpotAvailable(spawnM.availableQueue, gameM.playerTransform, this);
         GoToQueueSpot goToQueueSpot = new GoToQueueSpot(agent, this);
         IsLootSpotAvailable lootSpotAvailable = new IsLootSpotAvailable(spawnM.availableLoot, gameM.playerTransform, this);

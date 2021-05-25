@@ -11,6 +11,7 @@ public class GameManager : MonoSingleton<GameManager>
     public IntVariable nbClient;
     public IntVariable nbThief;
     public Transform playerTransform;
+    public List<Item> stockItems;
 
     public override void Init()
     {
