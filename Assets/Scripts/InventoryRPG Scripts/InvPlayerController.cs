@@ -38,7 +38,7 @@ public class InvPlayerController : MonoBehaviour
     private void GetInput()
     {    
         interact = Input.GetKeyDown(KeyCode.C);
-        invPocket = Input.GetKeyDown(KeyCode.I);
+        invPocket = Input.GetKeyDown(KeyCode.E);
     }
 
     
