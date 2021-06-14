@@ -10,6 +10,7 @@ public class GameManager : MonoSingleton<GameManager>
     public float npcSpeed;
     public IntVariable nbClient;
     public IntVariable nbThief;
+    public IntVariable nbItemsOrdered;
     public Transform playerTransform;
     public List<Item> stockItems;
 
@@ -25,6 +26,7 @@ public class GameManager : MonoSingleton<GameManager>
         SceneManager.LoadScene("Environment", LoadSceneMode.Additive);
         nbClient.Value = 0; // Wrong !! You have to reset Value to 0 evrey time the "Main" scene is loaded
         nbThief.Value = 0; // Wrong !! You have to reset Value to 0 evrey time the "Main" scene is loaded
+        nbItemsOrdered.Value = 4;
     }
 
     public void DisplayName()

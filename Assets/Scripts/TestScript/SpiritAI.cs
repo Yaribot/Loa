@@ -47,7 +47,7 @@ public class SpiritAI : MonoBehaviour
     
     private void ConstructBehaviourTree()
     {
-        OrderGenerator orderGenerator = new OrderGenerator(gameM.stockItems, this);
+        OrderGenerator orderGenerator = new OrderGenerator(gameM.stockItems, gameM.nbItemsOrdered, this);
         IsQueueSpotAvailable queueSpotAvailable = new IsQueueSpotAvailable(spawnM.availableQueue, gameM.playerTransform, this);
         GoToQueueSpot goToQueueSpot = new GoToQueueSpot(agent, this);
         IsLootSpotAvailable lootSpotAvailable = new IsLootSpotAvailable(spawnM.availableLoot, gameM.playerTransform, this);
@@ -55,12 +55,12 @@ public class SpiritAI : MonoBehaviour
         RandomStateNode randomStateNode = new RandomStateNode(spawnM);
         ClientStateNode clientStateNode = new ClientStateNode(spawnM.clientOnly, gameM.nbClient, agent.speed, this);
         ThiefStateNode thiefStateNode = new ThiefStateNode(spawnM.thiefOnly, gameM.nbThief, agent.speed, this);
-        FindState findState = new FindState(this); 
-        
+        FindState findState = new FindState(this);
 
 
 
-        Sequence goToQueueSpotSequence = new Sequence (new List<Node> { queueSpotAvailable, goToQueueSpot });
+        Sequence orderSequence = new Sequence(new List<Node> { orderGenerator });
+        Sequence goToQueueSpotSequence = new Sequence (new List<Node> { queueSpotAvailable, goToQueueSpot, orderSequence });
         Sequence goToLootSpotSequence = new Sequence (new List<Node> { lootSpotAvailable, goToLootSpot });
 
         Sequence thiefSequence = new Sequence(new List<Node> { thiefStateNode, goToLootSpotSequence });
