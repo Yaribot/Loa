@@ -21,10 +21,12 @@ public class OrderGenerator : Node
         
         if (SpiritOrder() == null)
         {
+            ai.isOrdering = false;
             return NodeState.FAILURE;
         }
         else
         {
+            ai.isOrdering = true;
             return NodeState.SUCCCESS;
         }
     }

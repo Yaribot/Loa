@@ -25,6 +25,8 @@ public class SpiritAI : MonoBehaviour
     private Node topNode;
 
     private bool rdmBool;
+    public bool isOrdering;
+    public bool isInPosition;
 
     private void Awake()
     {
@@ -37,12 +39,12 @@ public class SpiritAI : MonoBehaviour
         mat = GetComponentInChildren<MeshRenderer>().material;
         ConstructBehaviourTree();
         topNode.Evaluate();
+        //isOrdering = false;
 
         if (topNode.nodeState == NodeState.FAILURE)
         {
             SetColor(Color.white);
         }
-
     }
     
     private void ConstructBehaviourTree()
