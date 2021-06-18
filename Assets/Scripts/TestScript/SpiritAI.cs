@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class SpiritAI : MonoBehaviour
+public class SpiritAI : MonoBehaviour, INpcInteractable
 {
     /*[SerializeField]
     private QueueSpot[] availableQueue;
@@ -21,12 +21,17 @@ public class SpiritAI : MonoBehaviour
 
     private Material mat;
     private Transform spot;
+    Transform player;
     private NavMeshAgent agent;
     private Node topNode;
 
     private bool rdmBool;
     public bool isOrdering;
     public bool isInPosition;
+    bool isFocused = false;
+    bool hasInteracted = false;
+
+    public float radius = 3f;
 
     private void Awake()
     {
@@ -124,5 +129,27 @@ public class SpiritAI : MonoBehaviour
     public void SetAgentSpeed(float agentSpeed)
     {
         this.agent.speed = agentSpeed;
+    }
+
+    public void NpcInteractable()
+    {
+        Debug.Log("INTERACTING WITH " + transform.name);
+    }
+    public void OnFocused(Transform playerTransform)
+    {
+        isFocused = true;
+        player = playerTransform;
+        hasInteracted = false;
+    }
+    public void OndeFocused()
+    {
+        isFocused = false;
+        player = null;
+        hasInteracted = false;
+    }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, radius);
     }
 }

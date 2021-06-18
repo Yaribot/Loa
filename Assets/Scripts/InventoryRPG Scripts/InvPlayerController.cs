@@ -14,6 +14,7 @@ public class InvPlayerController : MonoBehaviour
     
 
     public Interactable focus;
+    public SpiritAI ai;
     public GameObject inventoryUI;
     //public GameObject pocketUI;
 
@@ -32,6 +33,7 @@ public class InvPlayerController : MonoBehaviour
     {
         GetInput();
         InteractFunc();
+        NpcInteractFunc(ai);
         ShowPocket();
     }
   
@@ -68,6 +70,44 @@ public class InvPlayerController : MonoBehaviour
             {
                 RemoveFocus();
                 CloseInventory();
+                isInteracting = false;
+            }
+        }
+    }
+    private void NpcInteractFunc<T>( T interactable)
+    {
+        if (interact)
+        {
+
+            Vector3 dir = transform.TransformDirection(Vector3.forward) * 2f;
+            Debug.DrawRay(transform.position + transform.up * 0.3f, dir, Color.green, 2f);
+            if (!isInteracting)
+            {
+                
+                RaycastHit hit;
+
+
+                if (Physics.Raycast(transform.position + transform.up * 0.3f, transform.TransformDirection(Vector3.forward), out hit, 2f))
+                {
+                    //Debug.Log("INTERACTING WITH AN OBJECT !!");
+                    Physics.IgnoreLayerCollision(3, 7, false);
+                    interactable = hit.collider.GetComponent<T>(); // return null, can't find the collider
+
+                    //Debug.Log(interactable); interactable = null !!! possible solution re enable physics -> IgnoreLayerCollision(int layer1, int layer2, bool ignore = true);
+                    if (interactable != null)
+                    {
+                        Debug.Log("INTERACTING WITH A CLIENT!!");
+                        isInteracting = true;
+                    }
+                    else
+                    {
+                        //Debug.Log("THIS IS NOT A CLIENT");
+                    }
+                }
+            }
+            else
+            {
+                Debug.Log("NOT INTERACTING");
                 isInteracting = false;
             }
         }

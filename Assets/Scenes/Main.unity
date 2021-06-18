@@ -281,7 +281,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 71920858}
-  m_LocalRotation: {x: 0.109373055, y: 0.000000004275789, z: -4.7047866e-10, w: 0.9940008}
+  m_LocalRotation: {x: 0.109373055, y: -0.000000004275789, z: 4.7047866e-10, w: 0.9940008}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -717,7 +717,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isInteracting: 0
-  focus: {fileID: 0}
+  focus: {fileID: 806043941}
+  ai: {fileID: 1539444635}
   inventoryUI: {fileID: 167471594}
 --- !u!1 &229945110
 GameObject:
@@ -8026,6 +8027,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1539444635 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1116153468, guid: 5f2e3a66d828fb9468bb6fb1a279c6ea, type: 3}
+  m_PrefabInstance: {fileID: 1578890890}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a321eeef9b97b894d893b7b8078b98d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1578890890
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8033,10 +8045,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1116153472, guid: 5f2e3a66d828fb9468bb6fb1a279c6ea, type: 3}
-      propertyPath: m_WalkableMask
-      value: 4294967295
-      objectReference: {fileID: 0}
     - target: {fileID: 3885825466958775956, guid: 5f2e3a66d828fb9468bb6fb1a279c6ea, type: 3}
       propertyPath: m_RootOrder
       value: 28
@@ -8084,6 +8092,10 @@ PrefabInstance:
     - target: {fileID: 3885825466958775959, guid: 5f2e3a66d828fb9468bb6fb1a279c6ea, type: 3}
       propertyPath: m_Name
       value: SpiritClientThief
+      objectReference: {fileID: 0}
+    - target: {fileID: 3885825466958775959, guid: 5f2e3a66d828fb9468bb6fb1a279c6ea, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f2e3a66d828fb9468bb6fb1a279c6ea, type: 3}
@@ -8679,7 +8691,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh19588
+  m_Name: pb_Mesh19592
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

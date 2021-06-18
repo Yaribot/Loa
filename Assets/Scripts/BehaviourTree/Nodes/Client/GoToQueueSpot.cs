@@ -28,17 +28,16 @@ public class GoToQueueSpot : Node
 
         if (distance > 0.2f)
         {
-            ai.isInPosition = false;
+            //ai.isInPosition = false;
             agent.isStopped = false;
             agent.SetDestination(queueSpot.position);
-            return NodeState.RUNNING;
+            return NodeState.RUNNING;           
         }
         else
         {
-            ai.isInPosition = true;
+            //ai.isInPosition = true;
             agent.isStopped = true;
             return NodeState.SUCCCESS;
         }
-
     }
 }
