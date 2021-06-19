@@ -31,7 +31,18 @@ public class SpiritAI : MonoBehaviour, INpcInteractable
     bool isFocused = false;
     bool hasInteracted = false;
 
-    public float radius = 3f;
+    private float radius;
+    float INpcInteractable.Radius
+    {
+        get
+        {
+            return radius;
+        }
+        set
+        {
+            radius = 3f;
+        }
+    }
 
     private void Awake()
     {
