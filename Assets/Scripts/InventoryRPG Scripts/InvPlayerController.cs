@@ -10,6 +10,7 @@ public class InvPlayerController : MonoBehaviour
     private bool invPocket;
     public bool isInteracting;
 
+    private int clientMask = 1 << 0;
 
     
 
@@ -33,7 +34,7 @@ public class InvPlayerController : MonoBehaviour
     {
         GetInput();
         InteractFunc();
-        NpcInteractFunc(ai);
+        NpcInteractFunc();
         ShowPocket();
     }
   
@@ -74,42 +75,36 @@ public class InvPlayerController : MonoBehaviour
             }
         }
     }
-    private void NpcInteractFunc<T>( T interactable)
+    private void NpcInteractFunc()
     {
         if (interact)
         {
 
             Vector3 dir = transform.TransformDirection(Vector3.forward) * 2f;
             Debug.DrawRay(transform.position + transform.up * 0.3f, dir, Color.green, 2f);
-            if (!isInteracting)
+           
+            RaycastHit hit;
+
+
+            if (Physics.Raycast(transform.position + transform.up * 0.3f, transform.TransformDirection(Vector3.forward), out hit, 2f, clientMask))
             {
-                
-                RaycastHit hit;
+                //Debug.Log("INTERACTING WITH AN OBJECT !!");
+                //Physics.IgnoreLayerCollision(3, 7, true);
+                INpcInteractable interactable = hit.collider.GetComponent<INpcInteractable>();
+                Debug.Log(interactable);
 
-
-                if (Physics.Raycast(transform.position + transform.up * 0.3f, transform.TransformDirection(Vector3.forward), out hit, 2f))
+                //Debug.Log(interactable); interactable = null !!! possible solution re enable physics -> IgnoreLayerCollision(int layer1, int layer2, bool ignore = true);
+                if (interactable != null)
                 {
-                    //Debug.Log("INTERACTING WITH AN OBJECT !!");
-                    Physics.IgnoreLayerCollision(3, 7, false);
-                    interactable = hit.collider.GetComponent<T>(); // return null, can't find the collider
+                    Debug.Log("INTERACTING WITH A CLIENT!!");
 
-                    //Debug.Log(interactable); interactable = null !!! possible solution re enable physics -> IgnoreLayerCollision(int layer1, int layer2, bool ignore = true);
-                    if (interactable != null)
-                    {
-                        Debug.Log("INTERACTING WITH A CLIENT!!");
-                        isInteracting = true;
-                    }
-                    else
-                    {
-                        //Debug.Log("THIS IS NOT A CLIENT");
-                    }
+                }
+                else
+                {
+                    Debug.Log("THIS IS NOT A CLIENT");
                 }
             }
-            else
-            {
-                Debug.Log("NOT INTERACTING");
-                isInteracting = false;
-            }
+            
         }
     }
 
