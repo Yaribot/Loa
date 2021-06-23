@@ -60,7 +60,7 @@ public class IsQueueSpotAvailable : Node
 
         for (int i = 0; i < availableSpots.Length; i++)
         {
-            Debug.Log(availableSpots[i]);
+            //Debug.Log(availableSpots[i]);
             //if (queueSpot.isOccupied == false)
             //{
             spot = availableSpots[i];

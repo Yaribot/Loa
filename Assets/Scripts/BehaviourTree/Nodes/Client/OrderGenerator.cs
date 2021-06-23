@@ -41,7 +41,7 @@ public class OrderGenerator : Node
         List<Item> orderedItems = new List<Item>();
         System.Random randomNb = new System.Random();
         System.Random randomItems = new System.Random();
-
+        ai.isOrdering = true;
         for (int i = 0; i < randomNb.Next(1,nbItemsOrdered.Value); i++) 
         {
             orderedItems.Add(stockItems[randomItems.Next(0, stockItems.Count)]);

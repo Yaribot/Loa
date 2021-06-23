@@ -30,7 +30,7 @@ public class Sequence : Node
             }
         }
 
-        _nodeState = isAnyNodeRunning ? NodeState.RUNNING : NodeState.SUCCCESS; // is a child node is running ? if yes NodeState.RUNNING. if not All children node are SUCCESS so the Sequence node is a SUCCESS
+        _nodeState = isAnyNodeRunning ? NodeState.RUNNING : NodeState.SUCCCESS; // is any child node is running ? if yes NodeState.RUNNING. if not All children node are SUCCESS so the Sequence node is a SUCCESS
         return _nodeState;
     }
 }

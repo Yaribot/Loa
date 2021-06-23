@@ -66,6 +66,7 @@ public class SpiritAI : MonoBehaviour, INpcInteractable
     private void ConstructBehaviourTree()
     {
         OrderGenerator orderGenerator = new OrderGenerator(gameM.stockItems, gameM.nbItemsOrdered, this);
+        ArriveAtPosition arriveAtPosition = new ArriveAtPosition(this);
         IsQueueSpotAvailable queueSpotAvailable = new IsQueueSpotAvailable(spawnM.availableQueue, gameM.playerTransform, this);
         GoToQueueSpot goToQueueSpot = new GoToQueueSpot(agent, this);
         IsLootSpotAvailable lootSpotAvailable = new IsLootSpotAvailable(spawnM.availableLoot, gameM.playerTransform, this);
@@ -78,6 +79,10 @@ public class SpiritAI : MonoBehaviour, INpcInteractable
 
 
         Sequence orderSequence = new Sequence(new List<Node> { orderGenerator });
+
+        //Sequence goingToCounter = new Sequence(new List<Node> { goToQueueSpot, goToPosition);
+        //Selector goToposition = new Selector(new List<Node> { orderSequence, goingToCounter });
+
         Sequence goToQueueSpotSequence = new Sequence (new List<Node> { queueSpotAvailable, goToQueueSpot, orderSequence });
         Sequence goToLootSpotSequence = new Sequence (new List<Node> { lootSpotAvailable, goToLootSpot });
 
@@ -99,6 +104,8 @@ public class SpiritAI : MonoBehaviour, INpcInteractable
     // Update is called once per frame
     void Update()
     {
+        DistanceBetweenSpots();
+        //Debug.Log(isInPosition);
         //------------------------
         /*topNode.Evaluate();
 
@@ -125,6 +132,22 @@ public class SpiritAI : MonoBehaviour, INpcInteractable
     public Transform GetQueueSpot()
     {
         return spot;
+    }
+
+    public float DistanceBetweenSpots()
+    {
+        float distance = Vector3.Distance(spot.position, agent.transform.position);
+        //Debug.Log(isInPosition);
+        if (distance > 2f)
+        {
+            isInPosition = false;
+        }
+        else if (distance <= 2f)
+        {
+            //Debug.Log("IN POSITION");
+            isInPosition = true;
+        }
+        return distance;
     }
 
     public void SetRandomBool(bool rdmBool)
