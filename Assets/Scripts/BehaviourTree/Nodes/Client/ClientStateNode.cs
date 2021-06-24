@@ -19,6 +19,7 @@ public class ClientStateNode : Node
 
     public override NodeState Evaluate()
     {
+        ai.isAClient = true;
         //spawnM = SpawnManager.Instance;
         bool rdmBool = ai.GetRandomBool();
 

@@ -24,12 +24,19 @@ public class SpiritAI : MonoBehaviour, INpcInteractable
     Transform player;
     private NavMeshAgent agent;
     private Node topNode;
+    private Repeator repeatMovingToSpot;
+    private Coroutine behavior;
 
     private bool rdmBool;
     public bool isOrdering;
     public bool isInPosition;
+    public bool isAClient;
+    private bool startBehaviour;
     bool isFocused = false;
     bool hasInteracted = false;
+
+    private Node mRoot;
+    public Node Root { get { return mRoot; } }
 
     private float radius;
     float INpcInteractable.Radius
@@ -56,11 +63,15 @@ public class SpiritAI : MonoBehaviour, INpcInteractable
         ConstructBehaviourTree();
         topNode.Evaluate();
         //isOrdering = false;
+        startBehaviour = false;
+        isInPosition = false;
 
-        if (topNode.nodeState == NodeState.FAILURE)
-        {
-            SetColor(Color.white);
-        }
+        //mRoot = new Node(this);
+
+        //if (topNode.nodeState == NodeState.FAILURE)
+        //{
+        //    SetColor(Color.white);
+        //}
     }
     
     private void ConstructBehaviourTree()
@@ -82,8 +93,8 @@ public class SpiritAI : MonoBehaviour, INpcInteractable
 
         //Sequence goingToCounter = new Sequence(new List<Node> { goToQueueSpot, goToPosition);
         //Selector goToposition = new Selector(new List<Node> { orderSequence, goingToCounter });
-
-        Sequence goToQueueSpotSequence = new Sequence (new List<Node> { queueSpotAvailable, goToQueueSpot, orderSequence });
+        repeatMovingToSpot = new Repeator(goToQueueSpot);
+        Sequence goToQueueSpotSequence = new Sequence (new List<Node> { queueSpotAvailable, repeatMovingToSpot, orderSequence });
         Sequence goToLootSpotSequence = new Sequence (new List<Node> { lootSpotAvailable, goToLootSpot });
 
         Sequence thiefSequence = new Sequence(new List<Node> { thiefStateNode, goToLootSpotSequence });
@@ -117,6 +128,36 @@ public class SpiritAI : MonoBehaviour, INpcInteractable
 
         //Debug.Log(rdmBool);
         //Debug.Log(mat.color);
+        Debug.Log(isAClient);
+        if (!isInPosition && isAClient)
+        {
+            CheckIfRepeatRunning(repeatMovingToSpot);
+        }
+    }
+
+    private void CheckIfRepeatRunning(Repeator repeat)
+    {
+        if (repeat.Evaluate() != Node.NodeState.RUNNING)
+        {
+            isInPosition = true;
+        }
+        else
+        {
+            isInPosition = false;
+            behavior = StartCoroutine(RunBehavior(repeat));
+            startBehaviour = true;
+        }
+    }
+
+    private IEnumerator RunBehavior(Repeator repeat)
+    {
+        Node.NodeState result = repeat.Evaluate();
+        while (result == Node.NodeState.RUNNING)
+        {
+            Debug.Log(repeat.ToString() + " result: " + result);
+            yield return new WaitForSeconds(5f);
+            result = repeat.Evaluate();
+        }
     }
 
     internal void SetColor(Color color)

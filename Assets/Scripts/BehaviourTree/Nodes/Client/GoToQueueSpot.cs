@@ -8,7 +8,6 @@ public class GoToQueueSpot : Node
     private NavMeshAgent agent;
     private SpiritAI ai;
     private bool isInPos;
-    private IEnumerator coroutine;
 
     public GoToQueueSpot(NavMeshAgent agent, SpiritAI ai)
     {
@@ -27,27 +26,33 @@ public class GoToQueueSpot : Node
             return NodeState.FAILURE;
         }
 
-        float distance = Vector3.Distance(queueSpot.position, agent.transform.position);
-        //float distance = ai.DistanceBetweenSpots(); 
+        //float distance = Vector3.Distance(queueSpot.position, agent.transform.position);
+        float distance = ai.DistanceBetweenSpots(); 
         
-        if (distance > 0.2f)
+        if (distance > 2f)
         {
             Debug.Log("GOING TO POSITION");
             //ai.isInPosition = false;
             agent.isStopped = false;
             agent.SetDestination(queueSpot.position);
-            return NodeState.RUNNING;           
+            //ticks++;
+            Debug.Log(ticks);
+            starting = false;
+            return NodeState.RUNNING;
         }
-        else if (distance <= 0.2f)
+        else // if (distance <= 0.2f)
         {
             //notInPosition = false;
             ai.isInPosition = true;
             
             Debug.Log("IN POSITION TO ORDER");
             agent.isStopped = true;
+            starting = false;
             return NodeState.SUCCCESS;
         }
-        return NodeState.FAILURE;
+        //starting = false;
+        
+        //return NodeState.FAILURE;
     }
 
     //private IEnumerator IsInPosition(float waitTime)

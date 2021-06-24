@@ -19,6 +19,7 @@ public class ThiefStateNode : Node
 
     public override NodeState Evaluate()
     {
+        ai.isAClient = false;
         //spawnM = SpawnManager.Instance;
         bool rdmBool = ai.GetRandomBool();
 
