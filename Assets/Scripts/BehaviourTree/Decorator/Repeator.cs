@@ -15,7 +15,7 @@ public class Repeator : Node
     {
         if (node.Evaluate() != NodeState.RUNNING)
         {
-            _nodeState = node.Evaluate();
+            _nodeState = NodeState.SUCCCESS;
             return _nodeState;
             //Reset();
             //node.Reset();

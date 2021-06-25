@@ -31,9 +31,12 @@ public class SpiritAI : MonoBehaviour, INpcInteractable
     public bool isOrdering;
     public bool isInPosition;
     public bool isAClient;
+    public bool onlyOnce;
     private bool startBehaviour;
     bool isFocused = false;
     bool hasInteracted = false;
+
+    private float myTime;
 
     private Node mRoot;
     public Node Root { get { return mRoot; } }
@@ -65,6 +68,9 @@ public class SpiritAI : MonoBehaviour, INpcInteractable
         //isOrdering = false;
         startBehaviour = false;
         isInPosition = false;
+        onlyOnce = false;
+
+        myTime = 0f;
 
         //mRoot = new Node(this);
 
@@ -128,11 +134,25 @@ public class SpiritAI : MonoBehaviour, INpcInteractable
 
         //Debug.Log(rdmBool);
         //Debug.Log(mat.color);
-        Debug.Log(isAClient);
+        //Debug.Log(isAClient);
+        myTime += Time.deltaTime;
         if (!isInPosition && isAClient)
         {
-            CheckIfRepeatRunning(repeatMovingToSpot);
+            if (myTime >= 5f)
+            {
+                CheckIfRepeatRunning(repeatMovingToSpot);
+                myTime = 0f;
+            }
         }
+        //}else if(isInPosition && isAClient)
+        //{
+        //    if (!onlyOnce)
+        //    {
+        //        CheckIfRepeatRunning(repeatMovingToSpot);
+        //        onlyOnce = true;
+        //    }
+        //}
+
     }
 
     private void CheckIfRepeatRunning(Repeator repeat)
